@@ -1,107 +1,11 @@
 # use natural language toolkit
-import nltk, os, json, datetime
+import nltk, os, json, datetime, Data
 nltk.download('punkt')
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
-
-# 3 classes of training data
-training_data = []
-training_data.append({"class":"Nederlands", "sentence":"Hallo, hoe gaat het ermee?"})
-training_data.append({"class":"Nederlands", "sentence":"Dit is een willekeurige zin om het systeem te leren."})
-training_data.append({"class":"Nederlands", "sentence":"Mijn favoriete hobby is talen leren."})
-training_data.append({"class":"Nederlands", "sentence":"Ik hoop dat het goed met je gaat!"})
-training_data.append({"class":"Nederlands", "sentence":"Ik vind het heel leuk om met jou te praten."})
-training_data.append({"class":"Nederlands", "sentence":"Wil je eens schrijven hoe jouw dag eruitziet?"})
-
-training_data.append({"class":"Engels", "sentence":"Hello, how are you doing?"})
-training_data.append({"class":"Engels", "sentence":"This is a random sentence to learn the system."})
-training_data.append({"class":"Engels", "sentence":"My favorite hobby is learning languages."})
-training_data.append({"class":"Engels", "sentence":"I hope you are doing well!"})
-training_data.append({"class":"Engels", "sentence":"I like talking to you."})
-training_data.append({"class":"Engels", "sentence":"Want to write what your day looks like?"})
-
-training_data.append({"class":"Duits", "sentence":"Hallo, wie geht es dir?"})
-training_data.append({"class":"Duits", "sentence":"Dies ist ein zufalliger Satz, um das System zu lernen."})
-training_data.append({"class":"Duits", "sentence":"Mein Lieblingshobby ist das Sprachenlernen."})
-training_data.append({"class":"Duits", "sentence":"Ich hoffe es geht dir gut!"})
-training_data.append({"class":"Duits", "sentence":"Ich spreche gern mit dir."})
-training_data.append({"class":"Duits", "sentence":"Willst du schreiben, wie dein Tag aussieht?"})
-print ("%s sentences in training data" % len(training_data))
-
-words = []
-classes = []
-documents = []
-ignore_words = ['?']
-# loop through each sentence in our training data
-for pattern in training_data:
-    # tokenize each word in the sentence
-    w = nltk.word_tokenize(pattern['sentence'])
-    # add to our words list
-    words.extend(w)
-    # add to documents in our corpus
-    documents.append((w, pattern['class']))
-    # add to our classes list
-    if pattern['class'] not in classes:
-        classes.append(pattern['class'])
-
-# stem and lower each word and remove duplicates
-words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
-words = list(set(words))
-
-# remove duplicates
-classes = list(set(classes))
-
-print (len(documents), "documents")
-print (len(classes), "classes", classes)
-print (len(words), "unique stemmed words", words)
-
-##############################################################################################
-##############################################################################################
-
-# create our training data
-training = []
-output = []
-# create an empty array for our output
-output_empty = [0] * len(classes)
-
-# training set, bag of words for each sentence
-for doc in documents:
-    # initialize our bag of words
-    bag = []
-    # list of tokenized words for the pattern
-    pattern_words = doc[0]
-    # stem each word
-    pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
-    # create our bag of words array
-    for w in words:
-        bag.append(1) if w in pattern_words else bag.append(0)
-
-    training.append(bag)
-    # output is a '0' for each tag and '1' for current tag
-    output_row = list(output_empty)
-    output_row[classes.index(doc[1])] = 1
-    output.append(output_row)
-
-print ("# words", len(words))
-print ("# classes", len(classes))
-
-##############################################################################################
-##############################################################################################
-
-# sample training/output
-i = 0
-w = documents[i][0]
-print ([stemmer.stem(word.lower()) for word in w])
-print (training[i])
-print (output[i])
-
-##############################################################################################
-##############################################################################################
-
 import numpy as np
 import time
 
-# compute sigmoid nonlinearity
 def sigmoid(x):
     output = 1/(1+np.exp(-x))
     return output
@@ -132,7 +36,7 @@ def bow(sentence, words, show_details=False):
 
     return(np.array(bag))
 
-def think(sentence, show_details=False):
+def think(sentence, words, show_details=False):
     x = bow(sentence.lower(), words, show_details)
     if show_details:
         print ("sentence:", sentence, "\n bow:", x)
@@ -144,11 +48,7 @@ def think(sentence, show_details=False):
     l2 = sigmoid(np.dot(l1, synapse_1))
     return l2
 
-##############################################################################################
-##############################################################################################
-
-# ANN and Gradient Descent code from https://iamtrask.github.io//2015/07/27/python-network-part2/
-def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout_percent=0.5):
+def train(X, y, classes=None, words= None , hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout_percent=0.5):
 
     print ("Training with %s neurons, alpha:%s, dropout:%s %s" % (hidden_neurons, str(alpha), dropout, dropout_percent if dropout else '') )
     print ("Input matrix: %sx%s    Output matrix: %sx%s" % (len(X),len(X[0]),1, len(classes)) )
@@ -226,21 +126,99 @@ def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout
         json.dump(synapse, outfile, indent=4, sort_keys=True)
     print ("saved synapses to:", synapse_file)
 
+
+def MakeBrainFile():
+        
+    training_data = Data.GetTrainingData()
+    print ("%s sentences in training data" % len(training_data))
+
+    words = []
+    classes = []
+    documents = []
+    ignore_words = ['?']
+    # loop through each sentence in our training data
+    for pattern in training_data:
+        # tokenize each word in the sentence
+        w = nltk.word_tokenize(pattern['sentence'])
+        # add to our words list
+        words.extend(w)
+        # add to documents in our corpus
+        documents.append((w, pattern['class']))
+        # add to our classes list
+        if pattern['class'] not in classes:
+            classes.append(pattern['class'])
+
+    # stem and lower each word and remove duplicates
+    words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+    words = list(set(words))
+
+    # remove duplicates
+    classes = list(set(classes))
+
+    print (len(documents), "documents")
+    print (len(classes), "classes", classes)
+    print (len(words), "unique stemmed words", words)
+
+    ##############################################################################################
+    ##############################################################################################
+
+    # create our training data
+    training = []
+    output = []
+    # create an empty array for our output
+    output_empty = [0] * len(classes)
+
+    # training set, bag of words for each sentence
+    for doc in documents:
+        # initialize our bag of words
+        bag = []
+        # list of tokenized words for the pattern
+        pattern_words = doc[0]
+        # stem each word
+        pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
+        # create our bag of words array
+        for w in words:
+            bag.append(1) if w in pattern_words else bag.append(0)
+
+        training.append(bag)
+        # output is a '0' for each tag and '1' for current tag
+        output_row = list(output_empty)
+        output_row[classes.index(doc[1])] = 1
+        output.append(output_row)
+
+    print ("# words", len(words))
+    print ("# classes", len(classes))
+    
+    X = np.array(training)
+    y = np.array(output)
+
+    start_time = time.time()
+
+    train(X, y, classes, words, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
+
+    elapsed_time = time.time() - start_time
+    print ("processing time:", elapsed_time, "seconds")
+    ##############################################################################################
+    ##############################################################################################
+
+    # sample training/output
+
+
+
+
+# compute sigmoid nonlinearity
+
+
 ##############################################################################################
 ##############################################################################################
 
-X = np.array(training)
-y = np.array(output)
-
-start_time = time.time()
-
-train(X, y, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
-
-elapsed_time = time.time() - start_time
-print ("processing time:", elapsed_time, "seconds")
+# ANN and Gradient Descent code from https://iamtrask.github.io//2015/07/27/python-network-part2/
 
 ##############################################################################################
 ##############################################################################################
+
+
+MakeBrainFile()
 
 # probability threshold
 ERROR_THRESHOLD = 0.2
@@ -251,10 +229,11 @@ with open(synapse_file) as data_file:
     synapse_0 = np.asarray(synapse['synapse0']) 
     synapse_1 = np.asarray(synapse['synapse1'])
 
-def classify(sentence, show_details=False):
-    results = think(sentence, show_details)
-
-    results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ] 
+def classify(sentence, words, classes, show_details=False):
+    results = think(sentence, words, show_details)
+    print results
+    results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ]
+    print results
     results.sort(key=lambda x: x[1], reverse=True) 
     return_results =[[classes[r[0]],r[1]] for r in results]
     print ("%s \n Taal: %s \n Zekerheid: %s%%" % (sentence, return_results[0][0], return_results[0][1]))
@@ -263,4 +242,4 @@ def classify(sentence, show_details=False):
 while True:
     print("#"*40)
     tempinput = raw_input("Type een zin:\n")
-    classify(str(tempinput), show_details=False)
+    classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

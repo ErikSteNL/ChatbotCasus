@@ -1,9 +1,14 @@
-import nltk, os, json
+import nltk, os, json, time
+import numpy as np
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
-import numpy as np
-import time
 
+# probability threshold
+ERROR_THRESHOLD = 0.8
+# load our calculated synapse values
+synapse_file = 'brain.json'
+
+# compute sigmoid nonlinearity
 def sigmoid(x):
     output = 1/(1+np.exp(-x))
     return output
@@ -34,7 +39,6 @@ def bow(sentence, words, show_details=False):
 
     return(np.array(bag))
 
-
 def think(sentence, words, show_details=False):
     x = bow(sentence.lower(), words, show_details)
     if show_details:
@@ -47,9 +51,6 @@ def think(sentence, words, show_details=False):
     l2 = sigmoid(np.dot(l1, synapse_1))
     return l2
 
-ERROR_THRESHOLD = 0.2
-synapse_file = 'synapses.json'
-
 with open(synapse_file) as data_file: 
     synapse = json.load(data_file) 
     synapse_0 = np.asarray(synapse['synapse0']) 
@@ -57,15 +58,18 @@ with open(synapse_file) as data_file:
     
 def classify(sentence, words, classes, show_details=False):
     results = think(sentence, words, show_details)
-    print results
-    results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ]
-    print results
-    results.sort(key=lambda x: x[1], reverse=True) 
-    return_results =[[classes[r[0]],r[1]] for r in results]
-    print ("%s \n Taal: %s \n Zekerheid: %s%%" % (sentence, return_results[0][0], return_results[0][1]))
-    return return_results
+    try:
+        results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ]
+        if len(results) > 0:
+            results.sort(key=lambda x: x[1], reverse=True) 
+            return_results =[[classes[r[0]],r[1]] for r in results]
+            print ("%s \n Taal: %s \n Zekerheid: %s%%" % (sentence, return_results[0][0], return_results[0][1]))
+        else:
+            print("Kan de taal niet met zekerheid bepalen...")
+    except Exception, e:
+        print("Kaput: %s" % e)
 
 while True:
-    print("#"*40)
+    print("\n"+"#"*40)
     tempinput = raw_input("Type een zin:\n")
     classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

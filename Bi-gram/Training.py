@@ -1,6 +1,8 @@
 import nltk, os, json, datetime, Data, time
 import numpy as np
 from nltk.stem.lancaster import LancasterStemmer
+from nltk.util import bigrams
+from nltk.util import trigrams
 
 nltk.download('punkt')
 stemmer = LancasterStemmer()
@@ -100,29 +102,40 @@ def MakeBrainFile():
     words = []
     classes = []
     documents = []
-    ignore_words = ['?','!','.',',']
+    ignore_words = ['?','!','.',',',':',';']
     # loop through each sentence in our training data
     for pattern in training_data:
         # tokenize each word in the sentence
-        w = nltk.word_tokenize(pattern['sentence'])
-        # add to our words list
-        words.extend(w)
-        # add to documents in our corpus
-        documents.append((w, pattern['class']))
-        # add to our classes list
-        if pattern['class'] not in classes:
-            classes.append(pattern['class'])
+        line = nltk.word_tokenize(pattern['sentence'])
+        #print("LINE: %s" % line)
+        for wrd in line:
+            gramwrd = bigrams(wrd)
+            #print("WORD: %s" % wrd)
+            for gram in gramwrd:
+                chars = gram[0]+gram[1]
+                #print("BI: %s" % chars)
+                # add to our words list
+                words.append(chars)
+                # add to documents in our corpus
+                documents.append((chars, pattern['class']))
+                # add to our classes list
+                if pattern['class'] not in classes:
+                    classes.append(pattern['class'])
 
     # stem and lower each word and remove duplicates
-    words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+    #words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+    words = [w.lower() for w in words if w not in ignore_words]
     words = list(set(words))
 
     # remove duplicates
     classes = list(set(classes))
 
     print (len(documents), "documents")
+    print (documents)
     print (len(classes), "classes", classes)
     print (len(words), "unique stemmed words", words)
+
+    raw_input("pause")
 
     # create our training data
     training = []
@@ -137,7 +150,8 @@ def MakeBrainFile():
         # list of tokenized words for the pattern
         pattern_words = doc[0]
         # stem each word
-        pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
+        #pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
+        pattern_words = [word.lower() for word in pattern_words]
         # create our bag of words array
         for w in words:
             bag.append(1) if w in pattern_words else bag.append(0)

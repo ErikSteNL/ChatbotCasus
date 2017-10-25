@@ -2,7 +2,7 @@
 
 def GetTrainingData():
     training_data = []
-    training_data.append({"class":"Nederlands", "sentence":"Hallo, hoe gaat het ermee?"})
+    training_data.append({"class":"Nederlands", "sentence":"Hllo, hoe gaat het ermee?"})
     training_data.append({"class":"Nederlands", "sentence":"Dit is een willekeurige zin om het systeem te leren."})
     training_data.append({"class":"Nederlands", "sentence":"Mijn favoriete hobby is talen leren."})
     training_data.append({"class":"Nederlands", "sentence":"Ik hoop dat het goed met je gaat!"})

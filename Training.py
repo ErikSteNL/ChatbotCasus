@@ -1,11 +1,11 @@
-# use natural language toolkit
-import nltk, os, json, datetime, Data
-nltk.download('punkt')
-from nltk.stem.lancaster import LancasterStemmer
-stemmer = LancasterStemmer()
+import nltk, os, json, datetime, Data, time
 import numpy as np
-import time
+from nltk.stem.lancaster import LancasterStemmer
 
+nltk.download('punkt')
+stemmer = LancasterStemmer()
+
+# compute sigmoid nonlinearity
 def sigmoid(x):
     output = 1/(1+np.exp(-x))
     return output
@@ -14,8 +14,8 @@ def sigmoid(x):
 def sigmoid_output_to_derivative(output):
     return output*(1-output)
 
+# creating brain file
 def train(X, y, classes=None, words= None , hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout_percent=0.5):
-
     print ("Training with %s neurons, alpha:%s, dropout:%s %s" % (hidden_neurons, str(alpha), dropout, dropout_percent if dropout else '') )
     print ("Input matrix: %sx%s    Output matrix: %sx%s" % (len(X),len(X[0]),1, len(classes)) )
     np.random.seed(1)
@@ -86,7 +86,7 @@ def train(X, y, classes=None, words= None , hidden_neurons=10, alpha=1, epochs=5
                'words': words,
                'classes': classes
               }
-    synapse_file = "synapses.json"
+    synapse_file = "brain.json"
 
     with open(synapse_file, 'w') as outfile:
         json.dump(synapse, outfile, indent=4, sort_keys=True)
@@ -94,14 +94,13 @@ def train(X, y, classes=None, words= None , hidden_neurons=10, alpha=1, epochs=5
 
 
 def MakeBrainFile():
-        
     training_data = Data.GetTrainingData()
     print ("%s sentences in training data" % len(training_data))
 
     words = []
     classes = []
     documents = []
-    ignore_words = ['?']
+    ignore_words = ['?','!','.',',']
     # loop through each sentence in our training data
     for pattern in training_data:
         # tokenize each word in the sentence
@@ -124,9 +123,6 @@ def MakeBrainFile():
     print (len(documents), "documents")
     print (len(classes), "classes", classes)
     print (len(words), "unique stemmed words", words)
-
-    ##############################################################################################
-    ##############################################################################################
 
     # create our training data
     training = []
@@ -164,29 +160,8 @@ def MakeBrainFile():
 
     elapsed_time = time.time() - start_time
     print ("processing time:", elapsed_time, "seconds")
-    ##############################################################################################
-    ##############################################################################################
 
-    # sample training/output
-
-
-
-
-# compute sigmoid nonlinearity
-
-
-##############################################################################################
-##############################################################################################
-
-# ANN and Gradient Descent code from https://iamtrask.github.io//2015/07/27/python-network-part2/
-
-##############################################################################################
-##############################################################################################
 
 
 MakeBrainFile()
-
-# probability threshold
-
-# load our calculated synapse values
 

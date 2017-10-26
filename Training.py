@@ -114,7 +114,7 @@ def MakeBrainFile():
             classes.append(pattern['class'])
 
     # stem and lower each word and remove duplicates
-    words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+    words = [w.lower() for w in words if w not in ignore_words]
     words = list(set(words))
 
     # remove duplicates
@@ -137,7 +137,7 @@ def MakeBrainFile():
         # list of tokenized words for the pattern
         pattern_words = doc[0]
         # stem each word
-        pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
+        pattern_words = [word.lower() for word in pattern_words]
         # create our bag of words array
         for w in words:
             bag.append(1) if w in pattern_words else bag.append(0)

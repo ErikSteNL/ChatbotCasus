@@ -4,8 +4,7 @@
 
 def GetTrainingData():
     training_data = []
-
-    training_data.append({"class":"Nederlands", "sentence":"Hallo, hoe gaat het ermee?"})
+    training_data.append({"class":"Nederlands", "sentence":"Hllo, hoe gaat het ermee?"})
     training_data.append({"class":"Nederlands", "sentence":"Dit is een willekeurige zin om het systeem te leren."})
     training_data.append({"class":"Nederlands", "sentence":"Mijn favoriete hobby is talen leren."})
     training_data.append({"class":"Nederlands", "sentence":"Ik hoop dat het goed met je gaat!"})
@@ -26,9 +25,16 @@ def GetTrainingData():
     training_data.append({"class":"Duits", "sentence":"Ich spreche gern mit dir."})
     training_data.append({"class":"Duits", "sentence":"Willst du schreiben, wie dein Tag aussieht?"})
 
-    
+    training_data.append({"class":"Frans", "sentence":"salut, comment ca vas?"})
+    training_data.append({"class":"Frans", "sentence":"Ceci est une phrase aleatoire pour apprendre au systeme"})
+    training_data.append({"class":"Frans", "sentence":"Mon hbby prefere est apprendre des languages"})
+    training_data.append({"class":"Frans", "sentence":"J'espere que tu vas bien!"})
+    training_data.append({"class":"Frans", "sentence":"J'aime bien parler avec toi."})
+    training_data.append({"class":"Frans", "sentence":"Veux tu ecrire comment se passe ta journee"})
+
     for line in training_data:
         line['sentence'] = line['sentence'].strip().decode("ascii", "ignore").encode("ascii")
+        if line['sentence'] == "":continue
     
     return training_data
 

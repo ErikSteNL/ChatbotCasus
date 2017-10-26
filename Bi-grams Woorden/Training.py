@@ -1,7 +1,6 @@
 import nltk, os, json, datetime, Data, time
 import numpy as np
 from nltk.stem.lancaster import LancasterStemmer
-from nltk.util import bigrams, trigrams
 
 nltk.download('punkt')
 stemmer = LancasterStemmer()
@@ -101,37 +100,25 @@ def MakeBrainFile():
     words = []
     classes = []
     documents = []
-    ignore_words = ['?','!','.',',',':',';']
+    ignore_words = ['?','!','.',',']
     # loop through each sentence in our training data
     for pattern in training_data:
         # tokenize each word in the sentence
-        line = nltk.word_tokenize(pattern['sentence'])
-        #print("LINE: %s" % line)
-        for wrd in line:
-            gramwrd = bigrams(wrd)
-            #print("WORD: %s" % wrd)
-            for gram in gramwrd:
-                chars = gram[0]+gram[1]
-                #print("BI: %s" % chars)
-                # add to our words list
-                words.append(chars)
-                # add to documents in our corpus
-                documents.append((chars, pattern['class']))
-                # add to our classes list
-                if pattern['class'] not in classes:
-                    classes.append(pattern['class'])
+        w = nltk.word_tokenize(pattern['sentence'])
+        # add to our words list
+        words.extend(w)
+        # add to documents in our corpus
+        documents.append((w, pattern['class']))
+        # add to our classes list
+        if pattern['class'] not in classes:
+            classes.append(pattern['class'])
 
     # stem and lower each word and remove duplicates
-    #words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
-    words = [w.lower() for w in words if w not in ignore_words]
+    words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
     words = list(set(words))
 
     # remove duplicates
     classes = list(set(classes))
-    
-    # remove dup
-    #documents = [d[0].lower() for d in documents if d not in ignore_words]
-    #documents = list(set(documents))
 
     print (len(documents), "documents")
     print (len(classes), "classes", classes)
@@ -142,7 +129,6 @@ def MakeBrainFile():
     output = []
     # create an empty array for our output
     output_empty = [0] * len(classes)
-    print(output_empty)
 
     # training set, bag of words for each sentence
     for doc in documents:
@@ -150,10 +136,8 @@ def MakeBrainFile():
         bag = []
         # list of tokenized words for the pattern
         pattern_words = doc[0]
-        print(pattern_words)
         # stem each word
-        #pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
-        pattern_words = [word.lower() for word in pattern_words]
+        pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
         # create our bag of words array
         for w in words:
             bag.append(1) if w in pattern_words else bag.append(0)
@@ -172,9 +156,8 @@ def MakeBrainFile():
 
     start_time = time.time()
 
-    print("Trainen...")
     train(X, y, classes, words, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
-    
+
     elapsed_time = time.time() - start_time
     print ("processing time:", elapsed_time, "seconds")
 

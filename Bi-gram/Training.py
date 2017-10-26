@@ -1,8 +1,7 @@
 import nltk, os, json, datetime, Data, time
 import numpy as np
 from nltk.stem.lancaster import LancasterStemmer
-from nltk.util import bigrams
-from nltk.util import trigrams
+from nltk.util import bigrams, trigrams
 
 nltk.download('punkt')
 stemmer = LancasterStemmer()
@@ -125,23 +124,25 @@ def MakeBrainFile():
     # stem and lower each word and remove duplicates
     #words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
     words = [w.lower() for w in words if w not in ignore_words]
-    words = list(set(words))
+    #words = list(set(words))
 
     # remove duplicates
     classes = list(set(classes))
+    
+    # remove dup
+    #documents = [d[0].lower() for d in documents if d not in ignore_words]
+    #documents = list(set(documents))
 
     print (len(documents), "documents")
-    print (documents)
     print (len(classes), "classes", classes)
     print (len(words), "unique stemmed words", words)
-
-    raw_input("pause")
 
     # create our training data
     training = []
     output = []
     # create an empty array for our output
     output_empty = [0] * len(classes)
+    print(output_empty)
 
     # training set, bag of words for each sentence
     for doc in documents:
@@ -149,6 +150,7 @@ def MakeBrainFile():
         bag = []
         # list of tokenized words for the pattern
         pattern_words = doc[0]
+        print(pattern_words)
         # stem each word
         #pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
         pattern_words = [word.lower() for word in pattern_words]
@@ -170,8 +172,9 @@ def MakeBrainFile():
 
     start_time = time.time()
 
+    print("Trainen...")
     train(X, y, classes, words, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
-
+    
     elapsed_time = time.time() - start_time
     print ("processing time:", elapsed_time, "seconds")
 

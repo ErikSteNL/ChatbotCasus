@@ -33,7 +33,6 @@ def train(X, y, classes=None, words=None , hidden_neurons=10, alpha=1, epochs=50
     synapse_1_direction_count = np.zeros_like(synapse_1)
         
     for j in iter(range(epochs+1)):
-        print(j)
         # Feed forward through layers 0, 1, and 2
         layer_0 = X
         layer_1 = sigmoid(np.dot(layer_0, synapse_0))
@@ -160,7 +159,7 @@ def MakeBrainFile():
 
     start_time = time.time()
 
-    train(X, y, classes, words, hidden_neurons=20, alpha=0.1, epochs=10000, dropout=False, dropout_percent=0.2)
+    train(X, y, classes, words, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
 
     elapsed_time = time.time() - start_time
     print ("processing time:", elapsed_time, "seconds")

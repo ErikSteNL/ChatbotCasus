@@ -107,8 +107,6 @@ def MakeBrainFile():
         # tokenize each word in the sentence
         w = list(bigrams(sentence['sentence']))
         tempWords = []
-        
-        
         for x in w:
             tempWords.append(x[0] + x[1])
         words.extend(tempWords)

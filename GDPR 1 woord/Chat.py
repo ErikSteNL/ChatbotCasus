@@ -1,10 +1,10 @@
-import nltk, os, json, time
+import nltk, os, json, time, Data
 import numpy as np
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 
 # probability threshold
-ERROR_THRESHOLD = 0.4 # 40%
+ERROR_THRESHOLD = 0
 # load our calculated synapse values
 synapse_file = 'brain.json'
 
@@ -51,10 +51,15 @@ def think(sentence, words, show_details=False):
     l2 = sigmoid(np.dot(l1, synapse_1))
     return l2
 
-with open(synapse_file) as data_file: 
-    synapse = json.load(data_file) 
-    synapse_0 = np.asarray(synapse['synapse0']) 
-    synapse_1 = np.asarray(synapse['synapse1'])
+def OpenFile():
+    with open(synapse_file) as data_file: 
+        synapse = json.load(data_file) 
+        synapse_0 = np.asarray(synapse['synapse0']) 
+        synapse_1 = np.asarray(synapse['synapse1'])
+
+
+        print("TrainingData geladen")
+        return synapse, synapse_0, synapse_1
     
 def classify(sentence, words, classes, show_details=False):
     results = think(sentence, words, show_details)
@@ -63,11 +68,17 @@ def classify(sentence, words, classes, show_details=False):
         if len(results) > 0:
             results.sort(key=lambda x: x[1], reverse=True) 
             return_results =[[classes[r[0]],r[1]] for r in results]
-            print ("%s \n Taal: %s \n Zekerheid: %s%%" % (sentence, return_results[0][0], return_results[0][1]))
+            answerToQuestion = Data.GetAnswer(return_results[0][0])
+            print ("\n Vraagnummer: %s \n Zekerheid: %s%%" % (return_results[0][0], return_results[0][1]))
+            print("\n\n answer to question: \n\n ")
+            print(str(answerToQuestion))
         else:
             print("Kan de taal niet met zekerheid bepalen...")
     except Exception, e:
         print("Kaput: %s" % e)
+
+
+synapse, synapse_0, synapse_1 = OpenFile()
 
 while True:
     print("\n"+"#"*40)

@@ -4,17 +4,71 @@
 
 def GetTrainingData():
     training_data = []
-
-    trainingDataRaw = []
-    with open("TrainingData.txt") as f:
-        trainingDataRaw = f.readlines()
-    trainingDataRaw = [x.strip("\n") for x in trainingDataRaw]
-
+    
+    training_data.append({"class":"1", "sentence":"What is GDPR?"})
+    training_data.append({"class":"1", "sentence":"Explain GDPR?"})
+    training_data.append({"class":"1", "sentence":"what are these new laws?"})
+    training_data.append({"class":"1", "sentence":"Explain these new laws"})
+    training_data.append({"class":"1", "sentence":"Definition"})
+    training_data.append({"class":"1", "sentence":"What is the definition of GDPR?"})
     
 
-    for line in trainingDataRaw:
-        line = line.split(':',1)
-        training_data.append({"class":line[0], "sentence":line[1]})
+    training_data.append({"class":"2", "sentence":"When will the GDPR come into effect?"})
+    training_data.append({"class":"2", "sentence":"When will the GDPR be implemented?"})
+    training_data.append({"class":"2", "sentence":"Date of which GDPR will be implemented?"})
+    training_data.append({"class":"2", "sentence":"when will it be in effect start begin"})
+    training_data.append({"class":"2", "sentence":"in what year date will it come into effect start begin"})
+    training_data.append({"class":"2", "sentence":"When date will the new laws come into effect?"})
+
+    training_data.append({"class":"3", "sentence":"Who does GDPR apply to?"})
+    training_data.append({"class":"3", "sentence":"Who does the new laws apply to?"})
+    training_data.append({"class":"3", "sentence":"what organisation does it apply to?"})
+    training_data.append({"class":"3", "sentence":"where will GDPR be apply applied?"})
+    training_data.append({"class":"3", "sentence":"which organisations organisation are concerned?"})
+    training_data.append({"class":"3", "sentence":"do i have to adapt to?"})
+
+    training_data.append({"class":"4", "sentence":"What responsibilities will companies have under this new regulation?"})
+    training_data.append({"class":"4", "sentence":"What responsibilities?"})
+    training_data.append({"class":"4", "sentence":"what responsibilities do i have?"})
+    training_data.append({"class":"4", "sentence":"What do i have to do?"})
+    training_data.append({"class":"4", "sentence":"what is new"})
+    training_data.append({"class":"4", "sentence":"what tasks task function job accountability new do I have?"})
+
+    training_data.append({"class":"5", "sentence":"What kind of information does the GDPR apply to?"})
+    training_data.append({"class":"5", "sentence":"What kind of information does the the new laws law apply to?"})
+    training_data.append({"class":"5", "sentence":"what does it GDPR new law laws apply to?"})
+    training_data.append({"class":"5", "sentence":"What information is concerned?"})
+
+    training_data.append({"class":"6", "sentence":"Are there any specific rules businesses business should be following in order to ensure compliance?"})
+    training_data.append({"class":"6", "sentence":"Are there any specific rules?"})
+    training_data.append({"class":"6", "sentence":"specific rules businesses business should be following in order to ensure compliance?"})
+    training_data.append({"class":"6", "sentence":"rules businesses should to ensure compliance?"})
+    training_data.append({"class":"6", "sentence":"what are the specifics particular exact precise correct distinct"})
+    training_data.append({"class":"6", "sentence":"rules for businesses business"})
+
+    training_data.append({"class":"7", "sentence":"What will the penalties be for failing to comply with GDPR?"})
+    training_data.append({"class":"7", "sentence":"What are the penalties penaly?"})
+    training_data.append({"class":"7", "sentence":"what happens with non compliance"})
+    training_data.append({"class":"7", "sentence":"what are the fines disadvantage financial pennaly punishment sanction punitive fee charge"})
+    training_data.append({"class":"7", "sentence":"retributions for not complying comply abide accordance satisfy meet fulfil"})
+    training_data.append({"class":"7", "sentence":"negative effects effect of not complying"})
+
+    training_data.append({"class":"8", "sentence":"What effect, if any, does Brexit have on GDPR?"})
+    training_data.append({"class":"8", "sentence":"effect of brexit"})
+    training_data.append({"class":"8", "sentence":"britain great england ireland scotland wales"})
+
+    training_data.append({"class":"9", "sentence":"Do all organisations now have to appoint a Data Protection Officer DPO?"})
+    training_data.append({"class":"9", "sentence":"appoint a Data Protection Officer DPO?"})
+    training_data.append({"class":"9", "sentence":"Do all organisations busines businesses now have to appoint a Data Protection Officer DPO?"})
+    training_data.append({"class":"9", "sentence":"oppointing a DPO Data protection officer?"})
+    training_data.append({"class":"9", "sentence":"appoint nominate name designate commision adopt engage"})
+    training_data.append({"class":"9", "sentence":"hire new employee"})
+
+    training_data.append({"class":"10", "sentence":"What rights will individuals have under law new laws GDPR?"})
+    training_data.append({"class":"10", "sentence":"regular people"})
+    training_data.append({"class":"10", "sentence":"individuals person"})
+    training_data.append({"class":"10", "sentence":"privilige advantage entitlement entitlements protection"})
+
 
     for line in training_data:
         line['sentence'] = line['sentence'].strip().decode("ascii", "ignore").encode("ascii")
@@ -22,8 +76,6 @@ def GetTrainingData():
     
     return training_data
 
-
-GetTrainingData()
 def GetAnswer(number):
     if number == "1": return GetAnswer1()
     elif number == "2": return GetAnswer2()

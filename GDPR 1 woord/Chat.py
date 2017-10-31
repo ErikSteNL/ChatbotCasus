@@ -4,7 +4,7 @@ from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 
 # probability threshold
-ERROR_THRESHOLD = 0
+ERROR_THRESHOLD = 0.2
 # load our calculated synapse values
 synapse_file = 'brain.json'
 
@@ -69,11 +69,11 @@ def classify(sentence, words, classes, show_details=False):
             results.sort(key=lambda x: x[1], reverse=True) 
             return_results =[[classes[r[0]],r[1]] for r in results]
             answerToQuestion = Data.GetAnswer(return_results[0][0])
-            print ("\n Vraagnummer: %s \n Zekerheid: %s%%" % (return_results[0][0], return_results[0][1]))
+            print ("\n Question number: %s \n percentage: %s%%" % (return_results[0][0], return_results[0][1]))
             print("\n\n answer to question: \n\n ")
             print(str(answerToQuestion))
         else:
-            print("Kan de taal niet met zekerheid bepalen...")
+            print("Cannot interpret the question correctly, try again")
     except Exception, e:
         print("Kaput: %s" % e)
 
@@ -82,5 +82,5 @@ synapse, synapse_0, synapse_1 = OpenFile()
 
 while True:
     print("\n"+"#"*40)
-    tempinput = raw_input("Type een zin:\n")
+    tempinput = raw_input("Asks me anything about GDPR:\n")
     classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

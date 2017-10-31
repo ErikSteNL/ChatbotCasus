@@ -4,76 +4,20 @@
 
 def GetTrainingData():
     training_data = []
+
+    trainingDataRaw = []
+    with open("DataForTraining.txt") as f:
+        trainingDataRaw = f.readlines()
+    trainingDataRaw = [x.strip("\n") for x in trainingDataRaw]
     
-    training_data.append({"class":"1", "sentence":"What is GDPR?"})
-    training_data.append({"class":"1", "sentence":"Explain GDPR?"})
-    training_data.append({"class":"1", "sentence":"what are these new laws?"})
-    training_data.append({"class":"1", "sentence":"Explain these new laws"})
-    training_data.append({"class":"1", "sentence":"Definition"})
-    training_data.append({"class":"1", "sentence":"What is the definition of GDPR?"})
-    
-
-    training_data.append({"class":"2", "sentence":"When will the GDPR come into effect?"})
-    training_data.append({"class":"2", "sentence":"When will the GDPR be implemented?"})
-    training_data.append({"class":"2", "sentence":"Date of which GDPR will be implemented?"})
-    training_data.append({"class":"2", "sentence":"when will it be in effect start begin"})
-    training_data.append({"class":"2", "sentence":"in what year date will it come into effect start begin"})
-    training_data.append({"class":"2", "sentence":"When date will the new laws come into effect?"})
-
-    training_data.append({"class":"3", "sentence":"Who does GDPR apply to?"})
-    training_data.append({"class":"3", "sentence":"Who does the new laws apply to?"})
-    training_data.append({"class":"3", "sentence":"what organisation does it apply to?"})
-    training_data.append({"class":"3", "sentence":"where will GDPR be apply applied?"})
-    training_data.append({"class":"3", "sentence":"which organisations organisation are concerned?"})
-    training_data.append({"class":"3", "sentence":"do i have to adapt to?"})
-
-    training_data.append({"class":"4", "sentence":"What responsibilities will companies have under this new regulation?"})
-    training_data.append({"class":"4", "sentence":"What responsibilities?"})
-    training_data.append({"class":"4", "sentence":"what responsibilities do i have?"})
-    training_data.append({"class":"4", "sentence":"What do i have to do?"})
-    training_data.append({"class":"4", "sentence":"what is new"})
-    training_data.append({"class":"4", "sentence":"what tasks task function job accountability new do I have?"})
-
-    training_data.append({"class":"5", "sentence":"What kind of information does the GDPR apply to?"})
-    training_data.append({"class":"5", "sentence":"What kind of information does the the new laws law apply to?"})
-    training_data.append({"class":"5", "sentence":"what does it GDPR new law laws apply to?"})
-    training_data.append({"class":"5", "sentence":"What information is concerned?"})
-
-    training_data.append({"class":"6", "sentence":"Are there any specific rules businesses business should be following in order to ensure compliance?"})
-    training_data.append({"class":"6", "sentence":"Are there any specific rules?"})
-    training_data.append({"class":"6", "sentence":"specific rules businesses business should be following in order to ensure compliance?"})
-    training_data.append({"class":"6", "sentence":"rules businesses should to ensure compliance?"})
-    training_data.append({"class":"6", "sentence":"what are the specifics particular exact precise correct distinct"})
-    training_data.append({"class":"6", "sentence":"rules for businesses business"})
-
-    training_data.append({"class":"7", "sentence":"What will the penalties be for failing to comply with GDPR?"})
-    training_data.append({"class":"7", "sentence":"What are the penalties penaly?"})
-    training_data.append({"class":"7", "sentence":"what happens with non compliance"})
-    training_data.append({"class":"7", "sentence":"what are the fines disadvantage financial pennaly punishment sanction punitive fee charge"})
-    training_data.append({"class":"7", "sentence":"retributions for not complying comply abide accordance satisfy meet fulfil"})
-    training_data.append({"class":"7", "sentence":"negative effects effect of not complying"})
-
-    training_data.append({"class":"8", "sentence":"What effect, if any, does Brexit have on GDPR?"})
-    training_data.append({"class":"8", "sentence":"effect of brexit"})
-    training_data.append({"class":"8", "sentence":"britain great england ireland scotland wales"})
-
-    training_data.append({"class":"9", "sentence":"Do all organisations now have to appoint a Data Protection Officer DPO?"})
-    training_data.append({"class":"9", "sentence":"appoint a Data Protection Officer DPO?"})
-    training_data.append({"class":"9", "sentence":"Do all organisations busines businesses now have to appoint a Data Protection Officer DPO?"})
-    training_data.append({"class":"9", "sentence":"oppointing a DPO Data protection officer?"})
-    training_data.append({"class":"9", "sentence":"appoint nominate name designate commision adopt engage"})
-    training_data.append({"class":"9", "sentence":"hire new employee"})
-
-    training_data.append({"class":"10", "sentence":"What rights will individuals have under law new laws GDPR?"})
-    training_data.append({"class":"10", "sentence":"regular people"})
-    training_data.append({"class":"10", "sentence":"individuals person"})
-    training_data.append({"class":"10", "sentence":"privilige advantage entitlement entitlements protection"})
-
+    for line in trainingDataRaw:
+        line = line.split(':',1)
+        training_data.append({"class":line[0], "sentence":line[1]})
 
     for line in training_data:
         line['sentence'] = line['sentence'].strip().decode("ascii", "ignore").encode("ascii")
         if line['sentence'] == "":continue
-    
+
     return training_data
 
 def GetAnswer(number):
@@ -90,7 +34,7 @@ def GetAnswer(number):
     return ""
 
 #antwoord op de vraag, What is GDPR?
-def GetAnswer1():   
+def GetAnswer1():
     return """GDPR stands for General Data Protection Regulation and is the new European
 Union Regulation set to replace the Data Protection Directive (DPD) and
 The UK Data Protection Act 1998. After many years of debate it was approved
@@ -121,7 +65,7 @@ tougher when the GDPR comes into force. Therefore, companies must ensure that
 consent is clear, affirmative, and in plain language. Companies must also make
 it easy for data subjects to withdraw consent if they wish to do so."""
 
-        
+
 #antwoord op de vraag, What kind of information does the GDPR apply to?
 def GetAnswer5():
     return """Much like the Data Protection Act 1998, GDPR applies to personal data. The current
@@ -137,7 +81,7 @@ will also be classed as personal data.
 Sensitive personal data - The GDPR refers to sensitive personal data as "special
 categories of personal data which uniqely identify a person." This will include genetic
 data and biometric data."""
-        
+
 
 #antwoord op de vraag, Are there any specific rules businesses should be following in order to ensure compliance?
 def GetAnswer6():
@@ -149,7 +93,7 @@ def GetAnswer6():
      - Held only for the absolute time necessary and no longer
      - Processed in a manner that ensures appropriate security of the personal data"""
 
-        
+
 #antwoord op de vraag, What will the penalites be for failing to comply with GDPR?
 def GetAnswer7():
     return """The GDPR have introduced a tiered approach to fines, meaning that the severity of the
@@ -159,7 +103,7 @@ whichever is the highest.
 Less serious violations, such as having improper records, or failing to notify of
 any breaches, can be fined a maximum of 2% of their annual global turnover,
 or €10 million."""
-        
+
 #antwoord op de vraag, What effect, if any, does Brexit have on GDPR?
 def GetAnswer8():
     return """Even though UK Prime Minister, Theresa May, has now announced a definitive date
@@ -167,7 +111,7 @@ def GetAnswer8():
 is still expected to take at least two years to take full effect, therefore,
 UK businesses still need to become GDPR ready by 25th May 2018."""
 
-        
+
 #antwoord op de vraag, Do all organisations now have to appoint a Data Protection Officer (DPO)?
 def GetAnswer9():
     return """It is not necessarily compulsory for all organisations to appoint a DPO as this will
@@ -190,7 +134,7 @@ information is held about them and how it is processed.
 data rectified if it is inaccurate or incomplete.
     - The right to erasure - Also known as 'the right to be forgotten', this refers
 to an individual's right to having their personal data deleted or removed without
-the need for a specific reason as to why they wish to discontinue. 
+the need for a specific reason as to why they wish to discontinue.
     - The right to restrict processing - Refers to an individual's right to block or
 supress processing of their personal data.
     - The right to data portability - This allows individuals to retain and reuse their
@@ -204,4 +148,3 @@ safeguards to protect individuals against the risk that a potentially damaging
 decision is made without human intervention. For example, individuals can choose
 not to be the subject of a decision where the consequence has a legal bearing on
 them, or is based on automated processing."""
-        

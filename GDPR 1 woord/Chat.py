@@ -16,7 +16,7 @@ def sigmoid(x):
 # convert output of sigmoid function to its derivative
 def sigmoid_output_to_derivative(output):
     return output*(1-output)
- 
+
 def clean_up_sentence(sentence):
     # tokenize the pattern
     sentence_words = nltk.word_tokenize(sentence)
@@ -29,10 +29,10 @@ def bow(sentence, words, show_details=False):
     # tokenize the pattern
     sentence_words = clean_up_sentence(sentence)
     # bag of words
-    bag = [0]*len(words)  
+    bag = [0]*len(words)
     for s in sentence_words:
         for i,w in enumerate(words):
-            if w == s: 
+            if w == s:
                 bag[i] = 1
                 if show_details:
                     print ("found in bag: %s" % w)
@@ -52,21 +52,21 @@ def think(sentence, words, show_details=False):
     return l2
 
 def OpenFile():
-    with open(synapse_file) as data_file: 
-        synapse = json.load(data_file) 
-        synapse_0 = np.asarray(synapse['synapse0']) 
+    with open(synapse_file) as data_file:
+        synapse = json.load(data_file)
+        synapse_0 = np.asarray(synapse['synapse0'])
         synapse_1 = np.asarray(synapse['synapse1'])
 
 
         print("TrainingData geladen")
         return synapse, synapse_0, synapse_1
-    
+
 def classify(sentence, words, classes, show_details=False):
     results = think(sentence, words, show_details)
     try:
         results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ]
         if len(results) > 0:
-            results.sort(key=lambda x: x[1], reverse=True) 
+            results.sort(key=lambda x: x[1], reverse=True)
             return_results =[[classes[r[0]],r[1]] for r in results]
             answerToQuestion = Data.GetAnswer(return_results[0][0])
             print ("\n Question number: %s \n percentage: %s%%" % (return_results[0][0], return_results[0][1]))

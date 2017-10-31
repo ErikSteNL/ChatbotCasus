@@ -6,12 +6,10 @@ def GetTrainingData():
     training_data = []
 
     trainingDataRaw = []
-    with open("TrainingData.txt") as f:
+    with open("DataForTraining.txt") as f:
         trainingDataRaw = f.readlines()
     trainingDataRaw = [x.strip("\n") for x in trainingDataRaw]
-
     
-
     for line in trainingDataRaw:
         line = line.split(':',1)
         training_data.append({"class":line[0], "sentence":line[1]})
@@ -19,11 +17,9 @@ def GetTrainingData():
     for line in training_data:
         line['sentence'] = line['sentence'].strip().decode("ascii", "ignore").encode("ascii")
         if line['sentence'] == "":continue
-    
+
     return training_data
 
-
-GetTrainingData()
 def GetAnswer(number):
     if number == "1": return GetAnswer1()
     elif number == "2": return GetAnswer2()
@@ -38,7 +34,7 @@ def GetAnswer(number):
     return ""
 
 #antwoord op de vraag, What is GDPR?
-def GetAnswer1():   
+def GetAnswer1():
     return """GDPR stands for General Data Protection Regulation and is the new European
 Union Regulation set to replace the Data Protection Directive (DPD) and
 The UK Data Protection Act 1998. After many years of debate it was approved
@@ -69,7 +65,7 @@ tougher when the GDPR comes into force. Therefore, companies must ensure that
 consent is clear, affirmative, and in plain language. Companies must also make
 it easy for data subjects to withdraw consent if they wish to do so."""
 
-        
+
 #antwoord op de vraag, What kind of information does the GDPR apply to?
 def GetAnswer5():
     return """Much like the Data Protection Act 1998, GDPR applies to personal data. The current
@@ -85,7 +81,7 @@ will also be classed as personal data.
 Sensitive personal data - The GDPR refers to sensitive personal data as "special
 categories of personal data which uniqely identify a person." This will include genetic
 data and biometric data."""
-        
+
 
 #antwoord op de vraag, Are there any specific rules businesses should be following in order to ensure compliance?
 def GetAnswer6():
@@ -97,7 +93,7 @@ def GetAnswer6():
      - Held only for the absolute time necessary and no longer
      - Processed in a manner that ensures appropriate security of the personal data"""
 
-        
+
 #antwoord op de vraag, What will the penalites be for failing to comply with GDPR?
 def GetAnswer7():
     return """The GDPR have introduced a tiered approach to fines, meaning that the severity of the
@@ -107,7 +103,7 @@ whichever is the highest.
 Less serious violations, such as having improper records, or failing to notify of
 any breaches, can be fined a maximum of 2% of their annual global turnover,
 or €10 million."""
-        
+
 #antwoord op de vraag, What effect, if any, does Brexit have on GDPR?
 def GetAnswer8():
     return """Even though UK Prime Minister, Theresa May, has now announced a definitive date
@@ -115,7 +111,7 @@ def GetAnswer8():
 is still expected to take at least two years to take full effect, therefore,
 UK businesses still need to become GDPR ready by 25th May 2018."""
 
-        
+
 #antwoord op de vraag, Do all organisations now have to appoint a Data Protection Officer (DPO)?
 def GetAnswer9():
     return """It is not necessarily compulsory for all organisations to appoint a DPO as this will
@@ -138,7 +134,7 @@ information is held about them and how it is processed.
 data rectified if it is inaccurate or incomplete.
     - The right to erasure - Also known as 'the right to be forgotten', this refers
 to an individual's right to having their personal data deleted or removed without
-the need for a specific reason as to why they wish to discontinue. 
+the need for a specific reason as to why they wish to discontinue.
     - The right to restrict processing - Refers to an individual's right to block or
 supress processing of their personal data.
     - The right to data portability - This allows individuals to retain and reuse their
@@ -152,4 +148,3 @@ safeguards to protect individuals against the risk that a potentially damaging
 decision is made without human intervention. For example, individuals can choose
 not to be the subject of a decision where the consequence has a legal bearing on
 them, or is based on automated processing."""
-        

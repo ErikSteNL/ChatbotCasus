@@ -7,7 +7,7 @@ from nltk.util import trigrams
 # probability threshold
 ERROR_THRESHOLD = 0 # 0%
 # load our calculated synapse values
-synapse_file = "C:/Users/Milan/Desktop/Backup/tri/brain.json"
+synapse_file = "C:/Users/LTErik/ChatbotCasus/Milan/tri/brain.json"
 
 # compute sigmoid nonlinearity
 def sigmoid(x):
@@ -78,7 +78,7 @@ def classify(sentence, words, classes, show_details=False):
 def chat(sentence):
     return classify(str(sentence), synapse['words'], synapse['classes'], show_details=False)
 
-#while True:
-#    print("\n"+"#"*40)
-#    tempinput = raw_input("Type een zin:\n")
-#    classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)
+while True:
+    print("\n"+"#"*40)
+    tempinput = raw_input("Type een zin:\n")
+    classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

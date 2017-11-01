@@ -30,13 +30,13 @@ def train(X, y, classes=None, words=None , hidden_neurons=10, alpha=1, epochs=50
 
     synapse_0_direction_count = np.zeros_like(synapse_0)
     synapse_1_direction_count = np.zeros_like(synapse_1)
-        
+
     for j in iter(range(epochs+1)):
 
         # Feed forward through layers 0, 1, and 2
         layer_0 = X
         layer_1 = sigmoid(np.dot(layer_0, synapse_0))
-                
+
         if(dropout):
             layer_1 *= np.random.binomial([np.ones((len(X),hidden_neurons))],1-dropout_percent)[0] * (1.0/(1-dropout_percent))
 
@@ -53,7 +53,7 @@ def train(X, y, classes=None, words=None , hidden_neurons=10, alpha=1, epochs=50
             else:
                 print ("break:", np.mean(np.abs(layer_2_error)), ">", last_mean_error )
                 break
-                
+
         # in what direction is the target value?
         # were we really sure? if so, don't change too much.
         layer_2_delta = layer_2_error * sigmoid_output_to_derivative(layer_2)
@@ -64,17 +64,17 @@ def train(X, y, classes=None, words=None , hidden_neurons=10, alpha=1, epochs=50
         # in what direction is the target l1?
         # were we really sure? if so, don't change too much.
         layer_1_delta = layer_1_error * sigmoid_output_to_derivative(layer_1)
-        
+
         synapse_1_weight_update = (layer_1.T.dot(layer_2_delta))
         synapse_0_weight_update = (layer_0.T.dot(layer_1_delta))
-        
+
         if(j > 0):
             synapse_0_direction_count += np.abs(((synapse_0_weight_update > 0)+0) - ((prev_synapse_0_weight_update > 0) + 0))
-            synapse_1_direction_count += np.abs(((synapse_1_weight_update > 0)+0) - ((prev_synapse_1_weight_update > 0) + 0))        
-        
+            synapse_1_direction_count += np.abs(((synapse_1_weight_update > 0)+0) - ((prev_synapse_1_weight_update > 0) + 0))
+
         synapse_1 += alpha * synapse_1_weight_update
         synapse_0 += alpha * synapse_0_weight_update
-        
+
         prev_synapse_0_weight_update = synapse_0_weight_update
         prev_synapse_1_weight_update = synapse_1_weight_update
 
@@ -150,13 +150,13 @@ def MakeBrainFile():
 
     print ("# words", len(words))
     print ("# classes", len(classes))
-    
+
     X = np.array(training)
     y = np.array(output)
 
     start_time = time.time()
 
-    train(X, y, classes, words, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
+    train(X, y, classes, words, hidden_neurons=25, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
 
     elapsed_time = time.time() - start_time
     print ("processing time:", elapsed_time, "seconds")
@@ -164,4 +164,3 @@ def MakeBrainFile():
 
 
 MakeBrainFile()
-

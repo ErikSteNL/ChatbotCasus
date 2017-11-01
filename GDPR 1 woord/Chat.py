@@ -91,7 +91,7 @@ def classify(sentence, words, classes, show_details=False):
             if return_results[0][1] < CERTAIN_THRESHOLD:
                 time.sleep(1)
                 history.append(sentence)
-                q = raw_input("Did this answer your qeustion? Y/N\n") # code 99
+                q = raw_input("%s Y/N\n" % Data.GetAnswer(99)) # code 99
                 if "y" in q.lower() or "yes" in q.lower():
                     print("Added %s to file %s" % (sentence, "brain.json")) # code 98
                 elif "n" in q.lower() or "no" in q.lower():

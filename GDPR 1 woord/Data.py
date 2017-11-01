@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # 4 classes of training data
-import json
+import json, random
 
 def GetTrainingData():
     training_data = []
@@ -27,8 +27,19 @@ def GetAnswer(number):
     with open("Answers.txt") as f:
         answers = f.readlines()
 
+    possibleAnswers = []
     for line in answers:
         line = line.split(':',1)
-        if(line[0] == number):
-            return line[1]
+        if(line[0] == str(number)):
+            print("gevonden")
+            possibleAnswers.append(line[1])
+
+    if len(possibleAnswers) == 0:
+        return ""
+    if len(possibleAnswers) == 1:
+        return possibleAnswers[0]
+    else:
+        idk = random.randint(0, len(possibleAnswers)-1)
+        return possibleAnswers[idk]
+
     return ""

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # 4 classes of training data
-
+import json
 
 def GetTrainingData():
     training_data = []
 
     trainingDataRaw = []
-    with open("DataForTraining.txt") as f:
+    with open("Vragen.txt") as f:
         trainingDataRaw = f.readlines()
     trainingDataRaw = [x.strip("\n") for x in trainingDataRaw]
 

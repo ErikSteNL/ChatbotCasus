@@ -1,26 +1,18 @@
 import nltk, os, json, time, Data, random
 import numpy as np
+from nltk.corpus import brown
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
+
+#nltk.download('averaged_perceptron_tagger')
+#nltk.download('brown')
+nltk.download('universal_tagset')
 
 # probability threshold
 ERROR_THRESHOLD = 0 # Onder de 50% stel de vraag opnieuw
 CERTAIN_THRESHOLD = 0.9 # Boven de 90% weet hij het antwoord zeker
 # load our calculated synapse values
 synapse_file = 'brain.json'
-
-# Answers when we don't understand the question
-idk_answer = [
-    "Ik begrijp uw vraag niet helemaal, kunt u de vraag anders stellen a.u.b?",
-    "Die vraag vindt ik onduidelijk.",
-    "Ik snap je vraag niet.",
-    "Kun je misschien je vraag anders tellen?"
-    ]
-
-thx_answer = [
-    "Thank you",
-    "No problem"
-    ]
 
 # compute sigmoid nonlinearity
 def sigmoid(x):
@@ -34,8 +26,21 @@ def sigmoid_output_to_derivative(output):
 def clean_up_sentence(sentence):
     # tokenize the pattern
     sentence_words = nltk.word_tokenize(sentence)
+    # tag the words
+    tags = nltk.pos_tag(sentence_words, tagset='universal')
+    print("TAGS: %s" % tags)
+    
+    sentence_words = []
+    
+    for word in tags:
+        if word[1] == "NOUN" or word[1] == "NUM" or word[1] == "ADV" or word[1] == "X" or word[1] == "VERB":
+            sentence_words.append(str(word[0]))
+
+    #time.sleep(100)
     # stem each word
+    print(sentence_words)
     sentence_words = [word.lower() for word in sentence_words]
+    print(sentence_words)
     return sentence_words
 
 # return bag of words array: 0 or 1 for each word in the bag that exists in the sentence
@@ -51,10 +56,10 @@ def bow(sentence, words, show_details=False):
                 if show_details:
                     print ("found in bag: %s" % w)
 
-    return(np.array(bag))
+    return(np.array(bag),sentence_words)
 
 def think(sentence, words, show_details=False):
-    x = bow(sentence.lower(), words, show_details)
+    x,keywords = bow(sentence.lower(), words, show_details)
     if show_details:
         print ("sentence:", sentence, "\n bow:", x)
     # input layer is our bag of words
@@ -63,7 +68,7 @@ def think(sentence, words, show_details=False):
     l1 = sigmoid(np.dot(l0, synapse_0))
     # output layer
     l2 = sigmoid(np.dot(l1, synapse_1))
-    return l2
+    return l2, keywords
 
 def OpenFile():
     with open(synapse_file) as data_file:
@@ -71,38 +76,68 @@ def OpenFile():
         synapse_0 = np.asarray(synapse['synapse0'])
         synapse_1 = np.asarray(synapse['synapse1'])
 
-        print("TrainingData geladen")
+        print("TrainingData loaded")
         return synapse, synapse_0, synapse_1
 
 def classify(sentence, words, classes, show_details=False):
-    results = think(sentence, words, show_details)
     history = []
+    results, keywords = think(sentence, words, show_details)
     try:
-        results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ]
-        #print("Results: %s" % results)
+        results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD]
+
         if len(results) > 0:
             results.sort(key=lambda x: x[1], reverse=True)
             return_results =[[classes[r[0]],r[1]] for r in results]
             answerToQuestion = Data.GetAnswer(return_results[0][0])
-            print("\nVraagnummer: %s \nZekerheid: %s%%" % (return_results[0][0], return_results[0][1]))
-            print("\nAnswer to question:\n")
+            print("\nClassNumber: %s \nCertainty: %s%%" % (return_results[0][0], return_results[0][1]))
+            print("\nAnswer:\n")
             print(answerToQuestion)
 
             if return_results[0][1] < CERTAIN_THRESHOLD:
-                time.sleep(1)
-                history.append(sentence)
-                q = raw_input("%s Y/N\n" % Data.GetAnswer(99)) # code 99
-                if "y" in q.lower() or "yes" in q.lower():
-                    print("Added %s to file %s" % (sentence, "brain.json")) # code 98
-                elif "n" in q.lower() or "no" in q.lower():
-                    new_q = raw_input("Sorry, can you reform your question?\n") # code 97
-                    classify(new_q, synapse['words'], synapse['classes'], show_details=False)
+                print("NOT SURE")
+                ask = True
 
+                while ask:
+                    time.sleep(1)
+                    keys = ""
+                    for i in keywords:
+                        keys += i + " "
+                    history.append(keys)
+                    q = raw_input("%s Y/N\n" % Data.GetAnswer(99)) # code 99
+
+                    if "y" in q.lower() or "yes" in q.lower(): # antwoord op vraag is goed
+                        print("Added new sentences to brain")  
+                        with open("Vragen.txt", "a+") as f:
+                            for i in history:
+                                print("New question: %s | %s" % (return_results[0][0],i))
+                                f.writelines([return_results[0][0],":",i,"\r\n"])
+                        ask = False
+                    
+                    elif "n" in q.lower() or "no" in q.lower(): # antwoord op vraag is NIET goed
+                        print("NIET GOED")
+                        opnieuw = raw_input("%s Y/N\n" % Data.GetAnswer(97)) # code 97
+
+                        if "y" in opnieuw:  # user wilt opnieuw proberen
+                            print("OPNIEUW")
+                            sentence = raw_input("%s" % Data.GetAnswer(98)) # code 98
+                            #classify(sentence, words, classes, show_details=False)
+                            
+                            results = think(sentence, words, show_details)
+                            if len(results) > 0:
+                                results = [[i,r] for i,r in enumerate(results)] # if r>ERROR_THRESHOLD
+                                return_results =[[classes[r[0]],r[1]] for r in results]
+                                answerToQuestion = Data.GetAnswer(return_results[0][0])
+                                print("\nClassNumber: %s \nCertainty: %s%%" % (return_results[0][0], return_results[0][1]))
+                                print("\nAnswer:\n%s" % answerToQuestion)
+                            else:
+                                print("%s" % Data.GetAnswer(100)) # code 100
+
+                        else: # user wilt NIET opnieuw proberen
+                            print("Okay")
+                            ask = False
         else:
-            idk = random.randint(0, len(idk_answer)-1)
-            print(idk)
-            print(idk_answer[idk])
-
+            print("%s\n" % Data.GetAnswer(100)) # code 100
+            
     except Exception, e:
         print("Exception error: %s" % e)
 
@@ -111,5 +146,5 @@ synapse, synapse_0, synapse_1 = OpenFile()
 
 while True:
     print("\n"+"#"*40)
-    tempinput = raw_input("Type een zin:\n")
+    tempinput = raw_input("Ask me a question:\n")
     classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

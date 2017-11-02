@@ -32,7 +32,6 @@ def GetAnswer(number):
     for line in answers:
         line = line.split(':',1)
         if(line[0] == str(number)):
-            print("gevonden")
             possibleAnswers.append(line[1])
 
     if len(possibleAnswers) == 0:

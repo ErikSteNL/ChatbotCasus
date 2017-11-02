@@ -9,7 +9,7 @@ nltk.download('averaged_perceptron_tagger')
 nltk.download('universal_tagset')
 
 # probability threshold
-ERROR_THRESHOLD = 0 # Onder de 50% stel de vraag opnieuw
+ERROR_THRESHOLD = 0 # Onder de 20% stel de vraag opnieuw
 CERTAIN_THRESHOLD = 0.9 # Boven de 90% weet hij het antwoord zeker
 # load our calculated synapse values
 synapse_file = 'brain.json'
@@ -36,7 +36,6 @@ def clean_up_sentence(sentence):
         if word[1] == "NOUN" or word[1] == "NUM" or word[1] == "ADV" or word[1] == "X" or word[1] == "VERB" or word[1] == "ADJ":
             sentence_words.append(str(word[0]))
 
-    #time.sleep(100)
     # stem each word
     print(sentence_words)
     sentence_words = [word.lower() for word in sentence_words]
@@ -100,13 +99,15 @@ def classify(sentence, words, classes, show_details=False):
             if return_results[0][1] < CERTAIN_THRESHOLD:
                 print("NOT SURE")
                 ask = True
+                addToHistory = True
 
                 while ask:
                     time.sleep(1)
-                    keys = ""
-                    for i in keywords:
-                        keys += i + " "
-                    history.append(keys)
+                    if addToHistory:
+                        keys = ""
+                        for i in keywords:
+                            keys += i + " "
+                        history.append(keys)
                     q = raw_input("%s Y/N\n" % Data.GetAnswer(99)) # code 99
 
                     if "y" in q.lower() or "yes" in q.lower(): # antwoord op vraag is goed
@@ -115,7 +116,6 @@ def classify(sentence, words, classes, show_details=False):
                             for i in history:
                                 print("New question: %s | %s" % (return_results[0][0],i))
                                 f.writelines([return_results[0][0],":",i,"\r\n"])
-
                         ask = False
 
                     elif "n" in q.lower() or "no" in q.lower(): # antwoord op vraag is NIET goed
@@ -135,6 +135,10 @@ def classify(sentence, words, classes, show_details=False):
                                 answerToQuestion = Data.GetAnswer(return_results[0][0])
                                 print("\nClassNumber: %s \nCertainty: %s%%" % (return_results[0][0], return_results[0][1]))
                                 print("\nAnswer:\n%s" % answerToQuestion)
+                                if return_results[0][1] > CERTAIN_THRESHOLD:
+                                    addToHistory = False
+                                else:
+                                    addToHistory = True
                             else:
                                 print("%s" % Data.GetAnswer(100)) # code 100
 

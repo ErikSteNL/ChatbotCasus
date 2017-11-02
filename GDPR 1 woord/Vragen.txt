@@ -78,3 +78,4 @@
 2:when will rules apply 
 8:does gdpr mean brexit 
 1:explain gdpr 
+1:is gdpr 

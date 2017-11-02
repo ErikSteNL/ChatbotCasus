@@ -1,0 +1,75 @@
+1:Definition
+1:General data protection
+1:European union regulation
+1:replace DPD data protection directive
+1:1998 data protection act
+1:parliament April 14th 14 2016
+2:Regulation effect 25th may 2018
+2:stat begin into effect
+2:changes current data protection laws begin
+2:Non-compliant compliance hefty fines start
+3:Organization processes personal
+3:data subjects residing EU
+3:obliged abide applies every organization
+3:regardless themselves reside in EU 28 member states
+3:apply to
+4:Rules obtaining consent
+4:My responsibilities
+4:personal information force
+4:companies ensure consent clear affirmative plain language
+4:easy data subjects withdraw consent wish
+5:Data protection act 1998 personal data
+5:information concerned laws
+5:physical physiological mental
+5:economic cultural social identity
+5:current protection directive
+5:personal data information relating
+5:identified identifiable natural personal
+5:directly indirectly
+5:frequently asked questions reference identification factors
+5:IP address classed sensitive
+5:special categories of uniquely genetic biometric
+6:Article 5 states
+6:specific rules business company
+6:personal data processed lawfully
+6:transparent collected specified
+6:explicit legitimate purpose
+6:adequate relevant limited
+6:accurate kept date absolute
+6:time necessary longer processed
+6:manner security personal data
+7:introduced tiered approach fines
+7:severity breach determine fine imposed
+7:maximum fine company face
+7:4% % percent annual turnover million 20 20€
+7:less serious violations violation
+7:improper records failing notify
+7:breach breaches fined 2% %
+7:percent annual 10 10€
+8:Brexit England wales Scotland Ireland great Britain great-Britain
+8:UK prime minister
+8:Theresa May date 29th 29
+8:march 2017 leaving European union
+8:brexit expected least
+8:2 two years full effect UK business
+9:necessary compulsory
+9: organizations appoint
+9:DPO data protection officer
+9:number factors ICO company
+9:appoint DPO public authority
+9:exception courts juridical capacity
+9:large scale categories criminal
+9:conviction convictions offences sufficient staff
+10:fundamental rights individuals
+10:individual 8 right person people
+10:informed transparent personal
+10:data right access exactly
+10:information held about them processed
+10:rectification inaccurate incomplete
+10:erasure forgotten deleted removed
+10:reason discontinue restrict processing
+10:personal data portability purpose object
+10:circumstances, individuals used marketing
+10:scientific historical research public interest
+10:automated decision making profiling safeguards
+10:safeguard damaging intervention human legal bearing

@@ -7,7 +7,7 @@ from nltk.util import trigrams
 # probability threshold
 ERROR_THRESHOLD = 0 # 0%
 # load our calculated synapse values
-synapse_file = "C:/Users/Smoely/Desktop/backup/tri/brain.json"
+synapse_file = "C:/Users/LTErik/ChatbotCasus/Milan/6 Talen/tri/brain.json"
 
 # compute sigmoid nonlinearity
 def sigmoid(x):

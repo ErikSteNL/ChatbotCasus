@@ -6,7 +6,7 @@
 
 4:Rules for obtaining valid consent to use personal information will become much tougher when the GDPR comes into force. Therefore, companies must ensure that consent is clear, affirmative, and in plain language. Companies must also make it easy for data subjects to withdraw consent if they wish to do so.
 
-5: Much like the Data Protection Act 1998, GDPR applies to personal data. The current Data Protection Directive defines personal data as; "any information relating to an identified or identifiable natural person ("data subject"); an identifiable person is one who can be identified, directly or indirectly, in particular by  top frequently asked questions about GDPR reference to an identification number or to one or more factors specific to his physical, physiological, mental, economic, cultural or social identity." However, although this definition will mostly remain unchanged, it will be slightly more detailed in that it will make clear that online identifiers, such as an IP address, will also be classed as personal data. Sensitive personal data - The GDPR refers to sensitive personal data as "special categories of personal data which uniquely identify a person." This will include genetic data and biometric data.
+5:Much like the Data Protection Act 1998, GDPR applies to personal data. The current Data Protection Directive defines personal data as; "any information relating to an identified or identifiable natural person ("data subject"); an identifiable person is one who can be identified, directly or indirectly, in particular by  top frequently asked questions about GDPR reference to an identification number or to one or more factors specific to his physical, physiological, mental, economic, cultural or social identity." However, although this definition will mostly remain unchanged, it will be slightly more detailed in that it will make clear that online identifiers, such as an IP address, will also be classed as personal data. Sensitive personal data - The GDPR refers to sensitive personal data as "special categories of personal data which uniquely identify a person." This will include genetic data and biometric data.
 
 6:Article 5 of the EU GDPR states that personal data must be:     - Processed lawfully, fairly and in a transparent manner     - Collected only for specified, explicit and legitimate purposes     - Adequate, relevant and limited to what is necessary      - Accurate and kept up to date      - Held only for the absolute time necessary and no longer      - Processed in a manner that ensures appropriate security of the personal data
 
@@ -23,4 +23,3 @@
 98:added to db
 
 99:Does this the answer your question?
-99:Sir, does this answer the question?

@@ -2,7 +2,7 @@ import nltk, os, json, datetime, Data, time
 import numpy as np
 from nltk.stem.lancaster import LancasterStemmer
 
-nltk.download('punkt')
+#nltk.download('punkt')
 stemmer = LancasterStemmer()
 
 # compute sigmoid nonlinearity
@@ -18,7 +18,7 @@ def sigmoid_output_to_derivative(output):
 def train(X, y, classes=None, words=None , hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout_percent=0.5):
     print ("Training with %s neurons, alpha:%s, dropout:%s %s" % (hidden_neurons, str(alpha), dropout, dropout_percent if dropout else '') )
     print ("Input matrix: %sx%s    Output matrix: %sx%s" % (len(X),len(X[0]),1, len(classes)) )
-    np.random.seed(1)
+    np.random.seed(int(round(time.time())))
 
     last_mean_error = 1
     # randomly initialize our weights with mean 0
@@ -156,7 +156,7 @@ def MakeBrainFile():
 
     start_time = time.time()
 
-    train(X, y, classes, words, hidden_neurons=25, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
+    train(X, y, classes, words, hidden_neurons=15, alpha=0.1, epochs=500000, dropout=False, dropout_percent=0.2)
 
     elapsed_time = time.time() - start_time
     print ("processing time:", elapsed_time, "seconds")

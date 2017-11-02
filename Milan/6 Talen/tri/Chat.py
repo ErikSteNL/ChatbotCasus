@@ -78,7 +78,7 @@ def classify(sentence, words, classes, show_details=False):
 def chat(sentence):
     return classify(str(sentence), synapse['words'], synapse['classes'], show_details=False)
 
-while True:
-    print("\n"+"#"*40)
-    tempinput = raw_input("Type een zin:\n")
-    classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)
+#while True:
+#    print("\n"+"#"*40)
+#    tempinput = raw_input("Type een zin:\n")
+#    classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

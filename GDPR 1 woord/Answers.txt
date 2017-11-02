@@ -1,3 +1,4 @@
+﻿
 1:GDPR stands for General Data Protection Regulation and is the new European Union Regulation set to replace the Data Protection Directive (DPD) and The UK Data Protection Act 1998. After many years of debate it was approved by the EU Parliament on April 14th 2016 and involves the protection of personal data and the rights of individuals. Its aim is to ease the flow of personal data across the 28 EU member states.
 
 2:The Regulation will come into effect on the 25th May 2018 and will bring in significant changes to current data protection laws as we know them. Any company deemed non-compliant will face hefty fines.
@@ -6,7 +7,7 @@
 
 4:Rules for obtaining valid consent to use personal information will become much tougher when the GDPR comes into force. Therefore, companies must ensure that consent is clear, affirmative, and in plain language. Companies must also make it easy for data subjects to withdraw consent if they wish to do so.
 
-5: Much like the Data Protection Act 1998, GDPR applies to personal data. The current Data Protection Directive defines personal data as; "any information relating to an identified or identifiable natural person ("data subject"); an identifiable person is one who can be identified, directly or indirectly, in particular by  top frequently asked questions about GDPR reference to an identification number or to one or more factors specific to his physical, physiological, mental, economic, cultural or social identity." However, although this definition will mostly remain unchanged, it will be slightly more detailed in that it will make clear that online identifiers, such as an IP address, will also be classed as personal data. Sensitive personal data - The GDPR refers to sensitive personal data as "special categories of personal data which uniquely identify a person." This will include genetic data and biometric data.
+5:Much like the Data Protection Act 1998, GDPR applies to personal data. The current Data Protection Directive defines personal data as; "any information relating to an identified or identifiable natural person ("data subject"); an identifiable person is one who can be identified, directly or indirectly, in particular by  top frequently asked questions about GDPR reference to an identification number or to one or more factors specific to his physical, physiological, mental, economic, cultural or social identity." However, although this definition will mostly remain unchanged, it will be slightly more detailed in that it will make clear that online identifiers, such as an IP address, will also be classed as personal data. Sensitive personal data - The GDPR refers to sensitive personal data as "special categories of personal data which uniquely identify a person." This will include genetic data and biometric data.
 
 6:Article 5 of the EU GDPR states that personal data must be:     - Processed lawfully, fairly and in a transparent manner     - Collected only for specified, explicit and legitimate purposes     - Adequate, relevant and limited to what is necessary      - Accurate and kept up to date      - Held only for the absolute time necessary and no longer      - Processed in a manner that ensures appropriate security of the personal data
 
@@ -17,10 +18,12 @@
 9:It is not necessarily compulsory for all organizations to appoint a DPO as this will be dependent upon a number of factors.  According to the ICO, a company should appoint a DPO if they:     - are a public authority (with the exception of courts acting in their judicial capacity)     - carry out large scale systematic monitoring of individuals, such as, online behavior tracking; or     - carry out large scale processing of special categories of data or data relating to criminal convictions and offences Any organization is able to appoint a DPO if they wish to do so. However, even if a company chooses not to appoint a DPO because the above doesn't apply to them, they must still ensure that they have sufficient staff and skills in place to be able to carry out their obligations under the GDPR.
 
 10:There are 8 fundamental rights of individuals under GDPR. These are:     - The right to be informed - Organizations must be completely transparent in how they are using personal data.     - The right of access - Individuals will have the right to know exactly what information is held about them and how it is processed.     - The right of rectification - Individuals will be entitled to have personal data rectified if it is inaccurate or incomplete.     - The right to erasure - Also known as 'the right to be forgotten', this refers to an individual's right to having their personal data deleted or removed without the need for a specific reason as to why they wish to discontinue.     - The right to restrict processing - Refers to an individual's right to block or supress processing of their personal data.     - The right to data portability - This allows individuals to retain and reuse their personal data for their own purpose.     - The right to object - In certain circumstances, individuals are entitled to object to their personal data being used. This includes, if a company uses personal data for the purpose of direct marketing, scientific and historical research, or for the performance of a task in the public interest.     - Rights of automated decision making and profiling - The GDPR has put in place safeguards to protect individuals against the risk that a potentially damaging decision is made without human intervention. For example, individuals can choose not to be the subject of a decision where the consequence has a legal bearing on them, or is based on automated processing.
-
-97:Sorry ask the question again
-
-98:added to db
-
-99:Does this the answer your question?
-99:Sir, does this answer the question?
+97:Would you like to try again?
+97:Wanna try again?
+98:Sorry to hear that, ask the question again.
+98:Reform your question.
+98:Please ask the same question in a different way.
+99:Does this answer your question?
+99:Is this what you where looking for?
+100:Sorry, I don't understand the question.
+100:That sentence is'nt clear to me.

@@ -156,11 +156,13 @@ def MakeBrainFile():
 
     start_time = time.time()
 
-    train(X, y, classes, words, hidden_neurons=15, alpha=0.1, epochs=500000, dropout=False, dropout_percent=0.2)
+    train(X, y, classes, words, hidden_neurons=15, alpha=0.1, epochs=1000000, dropout=False, dropout_percent=0.2)
 
     elapsed_time = time.time() - start_time
     print ("processing time:", elapsed_time, "seconds")
 
 
-
-MakeBrainFile()
+while True:
+    MakeBrainFile()
+    print("CREATED NEW BRAIN!!!!!!!!")
+    time.sleep(600)

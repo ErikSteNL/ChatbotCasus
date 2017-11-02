@@ -1,10 +1,10 @@
-import nltk, os, json, time, Data, random
+import nltk, os, json, time, Data, random, schedule
 import numpy as np
 from nltk.corpus import brown
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 
-#nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger')
 #nltk.download('brown')
 nltk.download('universal_tagset')
 
@@ -29,11 +29,11 @@ def clean_up_sentence(sentence):
     # tag the words
     tags = nltk.pos_tag(sentence_words, tagset='universal')
     print("TAGS: %s" % tags)
-    
+
     sentence_words = []
-    
+
     for word in tags:
-        if word[1] == "NOUN" or word[1] == "NUM" or word[1] == "ADV" or word[1] == "X" or word[1] == "VERB":
+        if word[1] == "NOUN" or word[1] == "NUM" or word[1] == "ADV" or word[1] == "X" or word[1] == "VERB" or word[1] == "ADJ":
             sentence_words.append(str(word[0]))
 
     #time.sleep(100)
@@ -72,6 +72,10 @@ def think(sentence, words, show_details=False):
 
 def OpenFile():
     with open(synapse_file) as data_file:
+        global synapse
+        global synapse_0
+        global synapse_1
+
         synapse = json.load(data_file)
         synapse_0 = np.asarray(synapse['synapse0'])
         synapse_1 = np.asarray(synapse['synapse1'])
@@ -106,13 +110,14 @@ def classify(sentence, words, classes, show_details=False):
                     q = raw_input("%s Y/N\n" % Data.GetAnswer(99)) # code 99
 
                     if "y" in q.lower() or "yes" in q.lower(): # antwoord op vraag is goed
-                        print("Added new sentences to brain")  
+                        print("Added new sentences to brain")
                         with open("Vragen.txt", "a+") as f:
                             for i in history:
                                 print("New question: %s | %s" % (return_results[0][0],i))
                                 f.writelines([return_results[0][0],":",i,"\r\n"])
+
                         ask = False
-                    
+
                     elif "n" in q.lower() or "no" in q.lower(): # antwoord op vraag is NIET goed
                         print("NIET GOED")
                         opnieuw = raw_input("%s Y/N\n" % Data.GetAnswer(97)) # code 97
@@ -121,10 +126,11 @@ def classify(sentence, words, classes, show_details=False):
                             print("OPNIEUW")
                             sentence = raw_input("%s" % Data.GetAnswer(98)) # code 98
                             #classify(sentence, words, classes, show_details=False)
-                            
-                            results = think(sentence, words, show_details)
+
+                            results, keywords = think(sentence, words, show_details)
                             if len(results) > 0:
                                 results = [[i,r] for i,r in enumerate(results)] # if r>ERROR_THRESHOLD
+                                results.sort(key=lambda x: x[1], reverse=True)
                                 return_results =[[classes[r[0]],r[1]] for r in results]
                                 answerToQuestion = Data.GetAnswer(return_results[0][0])
                                 print("\nClassNumber: %s \nCertainty: %s%%" % (return_results[0][0], return_results[0][1]))
@@ -137,14 +143,17 @@ def classify(sentence, words, classes, show_details=False):
                             ask = False
         else:
             print("%s\n" % Data.GetAnswer(100)) # code 100
-            
+
     except Exception, e:
         print("Exception error: %s" % e)
 
 
 synapse, synapse_0, synapse_1 = OpenFile()
 
+schedule.every(6).minutes.do(OpenFile)
+
 while True:
+    schedule.run_pending()
     print("\n"+"#"*40)
     tempinput = raw_input("Ask me a question:\n")
     classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

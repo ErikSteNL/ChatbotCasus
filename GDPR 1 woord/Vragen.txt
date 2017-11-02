@@ -73,3 +73,8 @@
 10:scientific historical research public interest
 10:automated decision making profiling safeguards
 10:safeguard damaging intervention human legal bearing
+2:when will begin 
+2:when will start 
+2:when will rules apply 
+8:does gdpr mean brexit 
+1:explain gdpr 

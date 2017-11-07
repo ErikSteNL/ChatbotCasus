@@ -1,8 +1,12 @@
+from apiclient.discovery import build 
 import nltk, os, json, time, Data
 import numpy as np
+import re
+from collections import Counter
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 
+#nltk.download('punkt')
 # probability threshold
 ERROR_THRESHOLD = 0
 # load our calculated synapse values
@@ -80,7 +84,18 @@ def classify(sentence, words, classes, show_details=False):
 
 synapse, synapse_0, synapse_1 = OpenFile()
 
+
+#returns translate sentence
+def g_translate(source):
+    service = (build('translate', 'v2', developerKey='AIzaSyB0x83parhwESgG8Ig8jhN5ZA34_VVyn8Q'))
+    request = service.translations().list(q=source, target='en')
+    response = request.execute()
+    return response['translations'][0]['translatedText']
+
+
 while True:
     print("\n"+"#"*40)
     tempinput = raw_input("Type een zin:\n")
+    tempinput = g_translate(tempinput)
+    print "Engels:", tempinput
     classify(str(tempinput), synapse['words'], synapse['classes'], show_details=False)

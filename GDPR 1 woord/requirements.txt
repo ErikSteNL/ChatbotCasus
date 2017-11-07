@@ -3,3 +3,4 @@ nltk==3.2.5
 numpy==1.13.3
 schedule==0.4.3
 google-api-python-client==1.6.4
+Unidecode==0.4.21

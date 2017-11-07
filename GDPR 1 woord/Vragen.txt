@@ -1,4 +1,4 @@
-1:Definition
+﻿1:Definition
 1:General data protection
 1:European union regulation
 1:replace DPD data protection directive
@@ -53,7 +53,7 @@
 8:brexit expected least
 8:2 two years full effect UK business
 9:necessary compulsory
-9: organizations appoint
+9:organizations appoint
 9:DPO data protection officer
 9:number factors ICO company
 9:appoint DPO public authority
@@ -73,9 +73,12 @@
 10:scientific historical research public interest
 10:automated decision making profiling safeguards
 10:safeguard damaging intervention human legal bearing
-2:when will begin 
-2:when will start 
-2:when will rules apply 
-8:does gdpr mean brexit 
-1:explain gdpr 
-1:is gdpr 
+2:when will begin2:when will start2:when will rules apply8:does gdpr mean brexit1:explain gdpr1:is gdpr
+70:hello how are
+70:hi how are
+70:hey how are
+70:good morning afternoon evening
+80:goodbye bye cya thank you
+80:thx thanks bye goodbye70:hello
+70:how are
+80:goodbye

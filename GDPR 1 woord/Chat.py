@@ -1,16 +1,14 @@
 import nltk, os, json, time, Data, random, schedule
 import numpy as np
-from nltk.corpus import brown
 from nltk.stem.lancaster import LancasterStemmer
-stemmer = LancasterStemmer()
 
-nltk.download('averaged_perceptron_tagger')
-#nltk.download('brown')
-nltk.download('universal_tagset')
+#nltk.download('averaged_perceptron_tagger')
+#nltk.download('universal_tagset')
 
 # probability threshold
-ERROR_THRESHOLD = 0 # Onder de 20% stel de vraag opnieuw
-CERTAIN_THRESHOLD = 0.9 # Boven de 90% weet hij het antwoord zeker
+ERROR_THRESHOLD = 0 # Onder de 0% stel de vraag opnieuw
+CERTAIN_THRESHOLD = 0.9 # Boven de 90% is een zeker antwoord
+
 # load our calculated synapse values
 synapse_file = 'brain.json'
 
@@ -83,6 +81,7 @@ def OpenFile():
         return synapse, synapse_0, synapse_1
 
 def classify(sentence, words, classes, show_details=False):
+    print("CLASSIFY")
     history = []
     results, keywords = think(sentence, words, show_details)
     try:
@@ -115,7 +114,7 @@ def classify(sentence, words, classes, show_details=False):
                         with open("Vragen.txt", "a+") as f:
                             for i in history:
                                 print("New question: %s | %s" % (return_results[0][0],i))
-                                f.writelines([return_results[0][0],":",i,"\r\n"])
+                                f.writelines([return_results[0][0],":",i,"\n"])
                         ask = False
 
                     elif "n" in q.lower() or "no" in q.lower(): # antwoord op vraag is NIET goed

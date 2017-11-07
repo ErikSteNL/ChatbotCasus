@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
-# 4 classes of training data
-import json, random
+import random
+#json
 
 def GetTrainingData():
     training_data = []
 
     trainingDataRaw = []
-    print"ik ben hier"
     with open("Vragen.txt") as f:
         trainingDataRaw = f.readlines()
     trainingDataRaw = [x.strip("\n") for x in trainingDataRaw]
@@ -17,7 +15,8 @@ def GetTrainingData():
 
     for line in training_data:
         line['sentence'] = line['sentence'].strip().decode("ascii", "ignore").encode("ascii")
-        if line['sentence'] == "":continue
+        if line['sentence'] == "":
+            continue
 
     return training_data
 
@@ -36,10 +35,10 @@ def GetAnswer(number):
 
     if len(possibleAnswers) == 0:
         return ""
-    if len(possibleAnswers) == 1:
+    elif len(possibleAnswers) == 1:
         return possibleAnswers[0]
     else:
         idk = random.randint(0, len(possibleAnswers)-1)
         return possibleAnswers[idk]
 
-    return ""
+    #return ""

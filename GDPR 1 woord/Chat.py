@@ -7,9 +7,9 @@ from nltk.stem.lancaster import LancasterStemmer
 
 # probability threshold
 ERROR_THRESHOLD = 0.5 # Onder de 0% stel de vraag opnieuw
-CERTAIN_THRESHOLD = 0.9 # Boven de 90% is een zeker antwoord
+CERTAIN_THRESHOLD = 0.95 # Boven de 90% is een zeker antwoord
 
-BOTDEBUG = True
+BOTDEBUG = False
 
 # load our calculated synapse values
 synapse_file = 'brain.json'
@@ -140,13 +140,13 @@ def classify(sentence, words, classes, detectedLanguageSource, show_details=Fals
                         if(BOTDEBUG):
                             print("NIET GOED")
 
-                        opnieuw = raw_input("%s Yes/No   :\n" % Data.GetAnswer(97, detectedLanguageSource)) # code 97
-                        print("\n\n")
+                        opnieuw = raw_input("%s Yes/No   :" % Data.GetAnswer(97, detectedLanguageSource)) # code 97
+                        print("\n")
                         if "y" in opnieuw:  # user wilt opnieuw proberen
                             if(BOTDEBUG):
                                 print("OPNIEUW")
 
-                            sentence = raw_input("%s" % Data.GetAnswer(98, detectedLanguageSource)) # code 98
+                            sentence = raw_input("%s\n" % Data.GetAnswer(98, detectedLanguageSource)) # code 98
                             #classify(sentence, words, classes, show_details=False)
 
                             results, keywords = think(sentence, words, show_details)
@@ -172,8 +172,8 @@ def classify(sentence, words, classes, detectedLanguageSource, show_details=Fals
 
                             ask = False
         else:
-            if(BOTDEBUG):
-                print("%s\n" % Data.GetAnswer(100, detectedLanguageSource)) # code 100
+
+            print("%s\n" % Data.GetAnswer(100, detectedLanguageSource)) # code 100
 
 
     except Exception, e:
@@ -191,18 +191,19 @@ def g_translate(source, TranslateTo):
     request = service.translations().list(q=source, target=TranslateTo)
     response = request.execute()
     detectedLanguageSource = response['translations'][0]['detectedSourceLanguage']
-    print(detectedLanguageSource)
     return response['translations'][0]['translatedText'], detectedLanguageSource
 
 
 schedule.every(6).minutes.do(OpenFile)
-
+detectedLanguageSource = ''
 while True:
+    if(detectedLanguageSource == ''):
+        detectedLanguageSource = 'en'
     schedule.run_pending()
     if(BOTDEBUG):
         print("\n"+"#"*40)
 
-    tempinput = raw_input("What is your question?:\n")
+    tempinput = raw_input(Data.GetAnswer(96,detectedLanguageSource) + "\n")
     tempinput, detectedLanguageSource = g_translate(tempinput,'en')
     if(BOTDEBUG):
         print "Engels:", tempinput

@@ -6,7 +6,7 @@ from collections import Counter
 from nltk.stem.lancaster import LancasterStemmer
 
 # probability threshold
-ERROR_THRESHOLD = 0.5 # Onder de 0% stel de vraag opnieuw
+ERROR_THRESHOLD = 0 # Onder de 0% stel de vraag opnieuw
 CERTAIN_THRESHOLD = 0.95 # Boven de 90% is een zeker antwoord
 
 BOTDEBUG = False
@@ -108,8 +108,7 @@ def classify(sentence, words, classes, detectedLanguageSource, show_details=Fals
                 print("\nAnswer:\n")
             print(answerToQuestion)
 
-
-            if return_results[0][1] < CERTAIN_THRESHOLD:
+            if return_results[0][1] < CERTAIN_THRESHOLD and not (int(return_results[0][0]) == 70 or int(return_results[0][0] == 80)):
                 if(BOTDEBUG):
                     print("NOT SURE")
 
@@ -140,7 +139,7 @@ def classify(sentence, words, classes, detectedLanguageSource, show_details=Fals
                         if(BOTDEBUG):
                             print("NIET GOED")
 
-                        opnieuw = raw_input("%s Yes/No   :" % Data.GetAnswer(97, detectedLanguageSource)) # code 97
+                        opnieuw = raw_input("%s Yes/No:   " % Data.GetAnswer(97, detectedLanguageSource)) # code 97
                         print("\n")
                         if "y" in opnieuw:  # user wilt opnieuw proberen
                             if(BOTDEBUG):
